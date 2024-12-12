@@ -7,7 +7,7 @@
     },
     {
         "name": "Family Care Alliance",
-        "services": ["Family Counseling", "Child Support", "Parent Education", "random word 1", "random word 1", "random word 1", "random word 1", "random word 1", "random word 1",],
+        "services": ["Family Counseling", "Child Support", "Parent Education", "random word 1", "random word 1", "random word 1", "random word 1", "random word 1", "random word 1"],
         "contacts": ["Mary Johnson"],
         "email": "info@familycare.org"
     },
