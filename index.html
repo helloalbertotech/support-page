@@ -74,6 +74,8 @@
                         <th data-sort="services">Services <span class="sort-icon"></span></th>
                         <th data-sort="contacts">Contacts <span class="sort-icon"></span></th>
                         <th data-sort="email">Email <span class="sort-icon"></span></th>
+                        <th data-sort="phone">Phone <span class="sort-icon"></span></th>
+                        <th data-sort="location">Location <span class="sort-icon"></span></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -116,7 +118,7 @@
         // Initialize Fuse.js for fuzzy search
         function initializeFuse() {
             const options = {
-                keys: ['name', 'services', 'contacts', 'email'],
+                keys: ['name', 'services', 'contacts', 'email', 'phone', 'location'],
                 threshold: 0.3,
                 includeMatches: true
             };
@@ -192,7 +194,7 @@
                 const row = document.createElement('tr');
                 
                 // Create cells for each column
-                const columns = ['name', 'services', 'contacts', 'email'];
+                const columns = ['name', 'services', 'contacts', 'email', 'phone', 'location'];
                 columns.forEach(column => {
                     const cell = document.createElement('td');
                     let content = group[column];
