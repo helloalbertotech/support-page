@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Groups Directory</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --highlight-color: #ffeb3b;
+            --zebra-color-1: #f0f7ff;
+            --zebra-color-2: #e1efff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: var(--secondary-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .multi-value {
+            display: inline-block;
+            margin: 2px;
+            padding: 4px 8px;
+            background-color: var(--zebra-color-1);
+            border-radius: 4px;
+        }
+
+        .multi-value:nth-child(even) {
+            background-color: var(--zebra-color-2);
+        }
+
+        .highlight {
+            background-color: var(--highlight-color);
+            padding: 2px;
+            border-radius: 2px;
+        }
+
+        .sort-icon::after {
+            content: '↕';
+            margin-left: 5px;
+        }
+
+        .sort-icon.asc::after {
+            content: '↑';
+        }
+
+        .sort-icon.desc::after {
+            content: '↓';
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Support Groups Directory</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for support groups...">
+        </div>
+        <table id="supportTable">
+            <thead>
+                <tr>
+                    <th data-sort="name">Name <span class="sort-icon"></span></th>
+                    <th data-sort="services">Services <span class="sort-icon"></span></th>
+                    <th data-sort="contacts">Contacts <span class="sort-icon"></span></th>
+                    <th data-sort="email">Email <span class="sort-icon"></span></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Initialize variables
+        let supportGroups = [];
+        let sortColumn = 'name';
+        let sortDirection = 'asc';
+        let fuse;
+
+        // Fetch and load data
+        async function loadData() {
+            try {
+                const response = await fetch('support-groups.json');
+                supportGroups = await response.json();
+                initializeFuse();
+                renderTable(supportGroups);
+                setupEventListeners();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        // Initialize Fuse.js for fuzzy search
+        function initializeFuse() {
+            const options = {
+                keys: ['name', 'services', 'contacts', 'email'],
+                threshold: 0.3,
+                includeMatches: true
+            };
+            fuse = new Fuse(supportGroups, options);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => handleSort(th.dataset.sort));
+            });
+        }
+
+        // Handle search
+        function handleSearch(event) {
+            const searchTerm = event.target.value.trim();
+            let results = [];
+
+            if (searchTerm === '') {
+                results = supportGroups;
+                renderTable(results);
+            } else {
+                const fuseResults = fuse.search(searchTerm);
+                results = fuseResults.map(result => {
+                    return {
+                        ...result.item,
+                        matches: result.matches
+                    };
+                });
+                renderTable(results, searchTerm);
+            }
+        }
+
+        // Handle sorting
+        function handleSort(column) {
+            const icons = document.querySelectorAll('.sort-icon');
+            icons.forEach(icon => icon.className = 'sort-icon');
+
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            const icon = document.querySelector(`th[data-sort="${column}"] .sort-icon`);
+            icon.classList.add(sortDirection);
+
+            const sortedGroups = [...supportGroups].sort((a, b) => {
+                let valueA = Array.isArray(a[column]) ? a[column][0] : a[column];
+                let valueB = Array.isArray(b[column]) ? b[column][0] : b[column];
+                
+                valueA = valueA.toLowerCase();
+                valueB = valueB.toLowerCase();
+
+                if (sortDirection === 'asc') {
+                    return valueA.localeCompare(valueB);
+                } else {
+                    return valueB.localeCompare(valueA);
+                }
+            });
+
+            renderTable(sortedGroups);
+        }
+
+        // Render table with data
+        function renderTable(data, searchTerm = '') {
+            const tbody = document.querySelector('#supportTable tbody');
+            tbody.innerHTML = '';
+
+            data.forEach(group => {
+                const row = document.createElement('tr');
+                
+                // Create cells for each column
+                const columns = ['name', 'services', 'contacts', 'email'];
+                columns.forEach(column => {
+                    const cell = document.createElement('td');
+                    let content = group[column];
+
+                    if (Array.isArray(content)) {
+                        // Handle multi-value cells
+                        cell.innerHTML = content.map(value => 
+                            `<span class="multi-value">${highlightMatch(value, searchTerm)}</span>`
+                        ).join('');
+                    } else {
+                        cell.innerHTML = highlightMatch(content, searchTerm);
+                    }
+
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
+            });
+        }
+
+        // Highlight search matches
+        function highlightMatch(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
