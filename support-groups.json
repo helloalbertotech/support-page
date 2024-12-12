@@ -1,0 +1,16 @@
+{
+  "supportGroups": [
+    {
+      "name": "Mental Health Support Network",
+      "services": ["Counseling", "Crisis Intervention", "Support Groups"],
+      "contacts": ["John Doe", "Jane Smith"],
+      "email": "contact@mhsn.org"
+    },
+    {
+      "name": "Family Care Alliance",
+      "services": ["Family Counseling", "Child Support", "Parent Education"],
+      "contacts": ["Mary Johnson"],
+      "email": "info@familycare.org"
+    }
+  ]
+}
