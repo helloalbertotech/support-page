@@ -156,10 +156,17 @@
         function handleSearch(event) {
             const searchTerm = event.target.value.trim();
             let results = [];
-
+        
             if (searchTerm === '') {
-                results = supportGroups;
-                renderTable(results);
+                // Instead of using supportGroups directly, we'll sort it again
+                results = [...supportGroups].sort((a, b) => {
+                    let valueA = String(a[sortColumn]).toLowerCase();
+                    let valueB = String(b[sortColumn]).toLowerCase();
+                    
+                    return sortDirection === 'asc' 
+                        ? valueA.localeCompare(valueB)
+                        : valueB.localeCompare(valueA);
+                });
             } else {
                 const fuseResults = fuse.search(searchTerm);
                 results = fuseResults.map(result => {
@@ -168,8 +175,8 @@
                         matches: result.matches
                     };
                 });
-                renderTable(results, searchTerm);
             }
+            renderTable(results, searchTerm);
         }
 
         // Handle sorting
