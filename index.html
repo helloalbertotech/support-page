@@ -294,6 +294,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             setupClearButton(); // Initialize clear button behavior
+        
+            // Focus on the search box on page load
+            const searchInput = document.getElementById('searchInput');
+            searchInput.focus();
         });
     </script>
 </body>
