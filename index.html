@@ -67,6 +67,17 @@
             z-index: 10;
             background-color: #212529; /* Bootstrap's dark theme color */
         }
+
+        #clearSearchBtn {
+            display: none; /* Hidden by default */
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0;
+        }
+        #clearSearchBtn:hover {
+            color: #dc3545; /* Optional hover effect (red color) */
+        }
+        
     </style>
 </head>
 <body>
@@ -74,8 +85,9 @@
         <h1 class="text-center mb-4">Support Groups Directory</h1>
         
         <div class="row mb-4">
-            <div class="col">
-                <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search for support groups...">
+            <div class="col position-relative">
+                <input type="text" id="searchInput" class="form-control form-control-lg pe-5" placeholder="Search for support groups...">
+                <button id="clearSearchBtn" type="button" class="btn btn-light position-absolute end-0 top-50 translate-middle-y me-2" style="border: none;">&times;</button>
             </div>
         </div>
 
@@ -249,8 +261,29 @@
             return String(text).replace(regex, '<span class="highlight">$1</span>');
         }
 
+        // Handle the clear button
+        function setupClearButton() {
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearSearchBtn');
+        
+            // Show/hide the clear button based on input value
+            searchInput.addEventListener('input', () => {
+                clearBtn.style.display = searchInput.value ? 'block' : 'none';
+            });
+        
+            // Clear the input field and trigger search reset
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.style.display = 'none';
+                handleSearch({ target: searchInput }); // Trigger search reset
+            });
+        }
+
         // Initialize the page
-        document.addEventListener('DOMContentLoaded', loadData);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupClearButton(); // Initialize clear button behavior
+        });
     </script>
 </body>
 </html>
