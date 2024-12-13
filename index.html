@@ -125,7 +125,8 @@
                 initializeFuse();
                 renderTable(supportGroups);
                 setupEventListeners();
-                 handleSort('name');
+                sortDirection = 'desc';
+                handleSort('name');
                 document.getElementById('error-message').style.display = 'none';
             } catch (error) {
                 console.error('Error loading data:', error);
