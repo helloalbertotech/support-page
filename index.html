@@ -50,6 +50,23 @@
             display: none;
             margin-top: 20px;
         }
+
+        #supportTable tbody td:first-child {
+        font-weight: bold;
+        }
+        
+        /* For sticky header */
+        .table-responsive {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        thead.table-dark th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #212529; /* Bootstrap's dark theme color */
+        }
     </style>
 </head>
 <body>
@@ -108,6 +125,7 @@
                 initializeFuse();
                 renderTable(supportGroups);
                 setupEventListeners();
+                 handleSort('name');
                 document.getElementById('error-message').style.display = 'none';
             } catch (error) {
                 console.error('Error loading data:', error);
