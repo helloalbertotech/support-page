@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Advanced Python Programming",
+        "instructor": "Dr. Alex Thompson",
+        "duration_weeks": 8,
+        "level": "Advanced",
+        "prerequisites": ["Basic Python", "Data Structures"],
+        "schedule": ["Monday", "Wednesday"],
+        "max_participants": 25
+    },
+    {
+        "name": "Data Science Fundamentals",
+        "instructor": "Maria Garcia",
+        "duration_weeks": 12,
+        "level": "Intermediate",
+        "prerequisites": ["Statistics", "Python Basics"],
+        "schedule": ["Tuesday", "Thursday"],
+        "max_participants": 30
+    },
+    {
+        "name": "Web Development Bootcamp",
+        "instructor": "Chris Anderson",
+        "duration_weeks": 10,
+        "level": "Beginner",
+        "prerequisites": ["HTML Basics"],
+        "schedule": ["Monday", "Wednesday", "Friday"],
+        "max_participants": 20
+    },
+    {
+        "name": "Machine Learning Workshop",
+        "instructor": "Dr. Sarah Kim",
+        "duration_weeks": 6,
+        "level": "Advanced",
+        "prerequisites": ["Python", "Statistics", "Linear Algebra"],
+        "schedule": ["Thursday", "Friday"],
+        "max_participants": 15
+    }
+]
