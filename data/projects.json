@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Digital Transformation Initiative",
+        "year": 2024,
+        "documentation_url": "https://wiki.company.com/dt-initiative",
+        "project_manager": "Robert Smith",
+        "status": "In Progress",
+        "budget": 500000,
+        "team_size": 12
+    },
+    {
+        "name": "Cloud Migration Phase 2",
+        "year": 2024,
+        "documentation_url": "https://wiki.company.com/cloud-migration",
+        "project_manager": "Emma Davis",
+        "status": "Planning",
+        "budget": 750000,
+        "team_size": 15
+    },
+    {
+        "name": "Security Enhancement Program",
+        "year": 2023,
+        "documentation_url": "https://wiki.company.com/security-2023",
+        "project_manager": "David Wilson",
+        "status": "Completed",
+        "budget": 300000,
+        "team_size": 8
+    },
+    {
+        "name": "Mobile App Redesign",
+        "year": 2024,
+        "documentation_url": "https://wiki.company.com/mobile-redesign",
+        "project_manager": "Jennifer Lee",
+        "status": "In Progress",
+        "budget": 250000,
+        "team_size": 6
+    }
+]
