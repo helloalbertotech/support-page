@@ -124,6 +124,9 @@
         // Initialize the page
         async function initialize() {
             try {
+                // Clear any existing error messages
+                document.getElementById('errorContainer').innerHTML = '';
+                
                 // Fetch list of JSON files from the data directory
                 const response = await fetch('data/manifest.json');
                 if (!response.ok) {
@@ -136,15 +139,30 @@
                 for (const file of manifest.files) {
                     await loadDataset(file);
                 }
-
+        
                 setupEventListeners();
                 renderCheckboxes();
-                renderAllTables();
+                
+                // Trigger initial search with empty string to show all data
+                handleSearch({ target: { value: '' } });
+                
             } catch (error) {
                 console.error('Initialization error:', error);
                 showError('Failed to initialize the application. Please check the data directory configuration.');
             }
         }
+
+        
+        // Render all tables
+        function renderAllTables() {
+            state.activeDatasets.forEach(datasetName => {
+                const { column, direction } = state.sortStates.get(datasetName);
+                const sortedData = sortDataset(state.datasets.get(datasetName), column, direction);
+                renderTable(datasetName, sortedData);
+            });
+        }
+
+
 
         // Load a single dataset
         async function loadDataset(filename) {
@@ -230,7 +248,7 @@
             handleSearch({ target: document.getElementById('searchInput') });
         }
 
-        // Handle search across all active datasets
+       // Handle search across all active datasets
         function handleSearch(event) {
             const searchTerm = event.target.value.trim();
             
@@ -248,11 +266,15 @@
                         ...result.item,
                         matches: result.matches
                     }));
+        
+                    // Apply current sort to search results
+                    const { column, direction } = state.sortStates.get(datasetName);
+                    results = sortDataset(results, column, direction);
                 }
-
+        
                 renderTable(datasetName, results, searchTerm);
             });
-
+        
             // Hide tables for inactive datasets
             state.datasets.forEach((_, datasetName) => {
                 const tableContainer = document.getElementById(`table-container-${datasetName}`);
