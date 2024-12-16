@@ -64,8 +64,17 @@
             font-weight: bold;
         }
         
+        .sticky-controls {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 1rem 0;
+            z-index: 100;
+            border-bottom: 1px solid #dee2e6;
+        }
+    
         .table-responsive {
-            max-height: calc(100vh - 200px);
+            max-height: calc(100vh - 300px);
             overflow-y: auto;
         }
         
@@ -92,17 +101,19 @@
     <div class="container py-4">
         <h1 class="text-center mb-4">Dynamic Directory</h1>
         
-        <!-- Search Input -->
-        <div class="row mb-4">
-            <div class="col">
-                <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search across all datasets...">
+        <div class="sticky-controls">
+            <!-- Search Input -->
+            <div class="row mb-4">
+                <div class="col">
+                    <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search across all datasets...">
+                </div>
             </div>
-        </div>
-
-        <!-- Dataset Controls -->
-        <div id="datasetControls" class="dataset-controls">
-            <h5>Select Datasets to Search:</h5>
-            <div id="checkboxContainer"></div>
+    
+            <!-- Dataset Controls -->
+            <div id="datasetControls" class="dataset-controls">
+                <h5>Select Datasets to Search:</h5>
+                <div id="checkboxContainer"></div>
+            </div>
         </div>
 
         <!-- Error Messages Container -->
