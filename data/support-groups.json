@@ -1,0 +1,34 @@
+[
+    {
+        "name": "Anxiety Support Network",
+        "services": ["Group Therapy", "Individual Counseling", "Online Support"],
+        "contacts": ["Dr. Sarah Johnson", "Mark Williams"],
+        "email": "info@anxietysupport.org",
+        "phone": "555-0123",
+        "location": "Boston, MA"
+    },
+    {
+        "name": "Family Care Alliance",
+        "services": ["Family Counseling", "Child Support", "Elder Care"],
+        "contacts": ["Lisa Chen"],
+        "email": "contact@familycare.org",
+        "phone": "555-0124",
+        "location": "New York, NY"
+    },
+    {
+        "name": "Veterans Support Group",
+        "services": ["PTSD Support", "Career Counseling", "Benefits Assistance"],
+        "contacts": ["James Miller", "Patricia Moore"],
+        "email": "help@veteransupport.org",
+        "phone": "555-0125",
+        "location": "San Diego, CA"
+    },
+    {
+        "name": "Wellness Together",
+        "services": ["Meditation Classes", "Stress Management", "Nutrition Counseling"],
+        "contacts": ["Dr. Michael Brown"],
+        "email": "info@wellnesstogether.org",
+        "phone": "555-0126",
+        "location": "Seattle, WA"
+    }
+]
